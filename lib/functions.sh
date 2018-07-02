@@ -82,6 +82,9 @@ EOF
 download_git_describe_output() {
   app_name=$1
   s3_releases_root=$2
+  build_dir=$3
 
+  cd "${build_dir}"
   $aws s3 cp "${s3_releases_root}/${app_name}/git_describe_output.txt" .
+  cd -
 }
