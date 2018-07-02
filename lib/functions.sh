@@ -84,7 +84,12 @@ download_git_describe_output() {
   s3_releases_root=$2
   build_dir=$3
 
+  echo "-----> Downloading git describe output ..."
+
   cd "${build_dir}"
   $aws s3 cp "${s3_releases_root}/${app_name}/git_describe_output.txt" .
+
+  echo "------> Found git describe output:"
+  cat git_describe_output.txt
   cd -
 }
