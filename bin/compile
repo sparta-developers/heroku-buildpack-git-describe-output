@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+build_pack_dir=$(cd $(dirname $(dirname $0)); pwd)
+
+### Configure environment
+
+set -o errexit    # always exit on error
+set -o pipefail   # don't ignore exit codes when piping output
+unset GIT_DIR     # Avoid GIT_DIR leak from previous build steps
+
+### Configure directories
+
+mkdir -p $1 $2 $3 # Ensure dirs are present
+
+build_dir=$(cd $1 && pwd)
+cache_dir=$(cd $2 && pwd)
+env_dir=$(cd $3 && pwd)
+heroku_dir=$build_dir/.heroku
+
+source ${build_pack_dir}/lib/functions.sh
+
+# Get AWS_KEY, AWS_SECRET_KEY, and AWS_REGION from Heroku environment:
+export_env_dir $env_dir
+
+load_config $build_dir $build_pack_dir
+
+download_aws_cli $build_dir
+create_aws_credentials $AWS_KEY $AWS_SECRET_KEY $AWS_REGION
+download_git_describe_output $app_name $s3_releases_root
+
