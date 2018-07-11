@@ -34,6 +34,8 @@ function load_config() {
   echo "-----> Will use the following versions:"
   echo "----->   * app_name ${app_name}"
   echo "----->   * s3_releases_root ${s3_releases_root}"
+  echo "----->   * remote_file_name ${remote_file_name}"
+  echo "----->   * local_file_name ${local_file_name}"
 }
 
 download_aws_cli() {
@@ -82,14 +84,16 @@ EOF
 download_git_describe_output() {
   app_name=$1
   s3_releases_root=$2
-  build_dir=$3
+  remote_file_name=$3
+  local_file_name=$4
+  build_dir=$5
 
   echo "-----> Downloading git describe output ..."
 
   cd "${build_dir}"
-  $aws s3 cp "${s3_releases_root}/${app_name}/git_describe_output.txt" .
+  $aws s3 cp "${s3_releases_root}/${app_name}/${remote_file_name}" "./${local_file_name}"
 
   echo "------> Found git describe output:"
-  cat git_describe_output.txt
+  cat "./${local_file_name}"
   cd -
 }

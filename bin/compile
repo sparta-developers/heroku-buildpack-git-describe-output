@@ -27,5 +27,10 @@ load_config $build_dir $build_pack_dir
 
 download_aws_cli $build_dir
 create_aws_credentials $AWS_KEY $AWS_SECRET_KEY $AWS_REGION
-download_git_describe_output $app_name $s3_releases_root $build_dir
+download_git_describe_output \
+  $app_name \
+  $s3_releases_root \
+  $remote_file_name \
+  $local_file_name \
+  $build_dir
 

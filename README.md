@@ -8,4 +8,5 @@ info baked into them!
 
 ### Configuration
 
-Set `app_name` and `s3_releases_root` in the git_describe_output_buildpack.config file.
+Set `app_name`, `s3_releases_root`, `remote_file_name`, and `local_file_name` in the 
+git_describe_output_buildpack.config file.
