@@ -23,6 +23,11 @@ source ${build_pack_dir}/lib/functions.sh
 # Get AWS_KEY, AWS_SECRET_KEY, and AWS_REGION from Heroku environment:
 export_env_dir $env_dir
 
+echo "Using the following Heroku environment variables: "
+echo "  AWS_KEY:        ${AWS_KEY}"
+echo "  AWS_SECRET_KEY: ${AWS_SECRET_KEY}"
+echo "  AWS_REGION:     ${AWS_REGION}"
+
 load_config $build_dir $build_pack_dir
 
 download_aws_cli $build_dir
