@@ -5,6 +5,7 @@ export_env_dir() {
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
   if [ -d "$env_dir" ]; then
     for e in $(ls $env_dir); do
+      echo "examining env file name ${e} >$(cat $env_dir/$e)<"
       echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
       export "$e=$(cat $env_dir/$e)"
       :
@@ -94,7 +95,7 @@ download_git_describe_output() {
   echo "        remote_file_name: ${remote_file_name}"
   echo "        local_file_name:  ${local_file_name}"
   echo "        build_dir:        ${build_dir}"
-  
+
   cd "${build_dir}"
   $aws s3 cp "${s3_releases_root}/${app_name}/${remote_file_name}" "./${local_file_name}"
 
